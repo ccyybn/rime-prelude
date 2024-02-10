@@ -15,6 +15,7 @@ switches:
   - name: full_shape
     states: [ 半, 全 ]
   - name: simplification
+    reset: 1
     states: [ 繁, 简 ]
   - name: ascii_punct
     states: [ 。，, ．， ]
