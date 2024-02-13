@@ -14,9 +14,8 @@ switches:
     states: [ 中, 英 ]
   - name: full_shape
     states: [ 半, 全 ]
-  - name: simplification
-    reset: 1
-    states: [ 繁, 简 ]
+  - name: traditionalization
+    states: [ 简, 繁 ]
   - name: ascii_punct
     states: [ 。，, ．， ]
 
@@ -38,14 +37,16 @@ engine:
     - fallback_segmentor
   translators:
     - punct_translator
+    - script_translator
     - reverse_lookup_translator
     - table_translator
     - lua_translator@date_translator
     - lua_translator@time_translator
+
   filters:
-    - simplifier
+    - simplifier@traditionalize         # 简繁切换
     - uniquifier
-    # - lua_filter@single_char_first_filter # 单字优先方法
+
 
 speller:
   max_code_length: 4                    # 四码上屏
@@ -58,6 +59,13 @@ translator:
   enable_sentence: false                # 句子输入模式
   enable_user_dict: false               # 是否开启用户词典（用户词典记录动态字词频，用户词）
   enable_encoder: false
+
+# 简繁切换
+traditionalize:
+  option_name: traditionalization
+  opencc_config: s2t.json  # s2t.json | s2hk.json | s2tw.json | s2twp.json
+  tips: all               # 转换提示: all 都显示 | char 仅单字显示 | none 不显示。
+  tags: []  # 限制在对应 tag，不对其他如反查的内容做简繁转换
 
 reverse_lookup:
   dictionary: luna_pinyin
