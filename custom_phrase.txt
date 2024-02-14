@@ -3,6 +3,6 @@
 #@/db_name	custom_phrase.txt
 #@/db_type	tabledb
 
-焱 hhh
-燚 hhhh
+焱	hhh
+燚	hhhh
 又双叒叕	yyyy
