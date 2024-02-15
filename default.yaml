@@ -4,43 +4,50 @@
 config_version: '0.40'
 
 schema_list:
-  - schema: luna_pinyin
-  - schema: luna_pinyin_simp
-  - schema: luna_pinyin_fluency
-  - schema: bopomofo
-  - schema: bopomofo_tw
-  - schema: cangjie5
-  - schema: stroke
-  - schema: terra_pinyin
+  - schema: flypy
+  - schema: radical_pinyin
 
 switcher:
-  caption: 〔方案選單〕
+  caption: OPTION
   hotkeys:
     - Control+grave
     - Control+Shift+grave
     - F4
   save_options:
+    - ascii_mode
+    - traditionalization
     - full_shape
+    - emoji
     - ascii_punct
     - simplification
-    - extended_charset
-    - zh_hant
-    - zh_hans
-    - zh_hant_tw
   fold_options: true
   abbreviate_options: true
-  option_list_separator: '／'
+  option_list_separator: ' / '
+
+ascii_composer:
+  good_old_caps_lock: true  # true | false
+  switch_key:
+    Caps_Lock: clear      # commit_code | commit_text | clear
+    Shift_L: commit_code  # commit_code | commit_text | inline_ascii | clear | noop
+    Shift_R: commit_code  # commit_code | commit_text | inline_ascii | clear | noop
+    Control_L: noop       # commit_code | commit_text | inline_ascii | clear | noop
+    Control_R: noop       # commit_code | commit_text | inline_ascii | clear | noop
+    Eisu_toggle: clear
 
 menu:
-  page_size: 5
+  page_size: 9
 
 punctuator:
   full_shape:
     __include: punctuation:/full_shape
   half_shape:
     __include: punctuation:/half_shape
+  symbols:
+    __include: symbols:/symbols
 
 key_binder:
+  select_first_character: bracketleft
+  select_last_character: bracketright
   bindings:
     __patch:
       - key_bindings:/emacs_editing
@@ -54,13 +61,8 @@ recognizer:
     email: "^[A-Za-z][-_.0-9A-Za-z]*@.*$"
     uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
     url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"
-
-ascii_composer:
-  good_old_caps_lock: true
-  switch_key:
-    Shift_L: inline_ascii
-    Shift_R: commit_text
-    Control_L: noop
-    Control_R: noop
-    Caps_Lock: clear
-    Eisu_toggle: clear
+    punct: "/([0-9]|10|[A-Za-z]+)$"
+    reverse_lookup: "`[a-z]*'?$"
+    gregorian_to_lunar: "^L[0-9]{1,8}"
+    number: "^N[0-9]+[.]?[0-9]*"
+    unicode: "^U[a-f0-9]+"
